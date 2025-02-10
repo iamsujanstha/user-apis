@@ -1,6 +1,8 @@
-export interface AddressService {
-    getAddress(): Promise<UserListDto>;
-    createAddress(user: UserListDto): Promise<UserListDto>;
-    updateAddress(user: UserListDto): Promise<UserListDto>;
-    deleteAddress(id: string): Promise<void>;
+import { CreateAddressDto } from '../dto/create-address.dto';
+
+export interface IAddressService {
+  getAddress(): Promise<CreateAddressDto[]>;
+  createAddress(address: CreateAddressDto): Promise<CreateAddressDto>;
+  updateAddress(user: CreateAddressDto): Promise<CreateAddressDto>;
+  deleteAddress(id: string): Promise<void>;
 }
