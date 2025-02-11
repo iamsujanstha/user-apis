@@ -1,26 +1,61 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { IUserInterface } from '../interface/user.interface';
-import { Injectable } from '@nestjs/common';
-import { UserListDto } from '../dto/userList.dto';
+import { UserDto } from '../dto/user.dto';
+import { User } from 'src/modules/user/entity/user.entity';
 import { UserRepository } from 'src/modules/user/repo/user.repository';
+import { wrap } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService implements IUserInterface {
-  public constructor(userRepo: UserRepository) {}
+  public constructor(
+    @InjectRepository(User) private readonly userRepo: UserRepository,
+  ) {}
 
-  createUser(user: UserListDto): Promise<UserListDto> {
-    return Promise.resolve(undefined);
+  async createUser(userDto: UserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(userDto.password, 10);
+    const user = this.userRepo.create({
+      firstName: userDto.firstName,
+      middleName: userDto.middleName,
+      lastName: userDto.lastName,
+      email: userDto.email,
+      password: hashedPassword,
+    });
+
+    await this.userRepo.getEntityManager().persistAndFlush(user);
+
+    return user;
   }
 
-  deleteUser(id: string): Promise<void> {
-    return Promise.resolve(undefined);
+  async deleteUser(id: string): Promise<void> {
+    const user = await this.userRepo.findOne(+id);
+    if (user) {
+      await this.userRepo.nativeDelete(+id);
+    }
   }
 
-  getUserList(): Promise<UserListDto> {
-    return Promise.resolve(undefined);
+  async getUserList(): Promise<User[]> {
+    return this.userRepo.findAll();
   }
 
-  updateUser(user: UserListDto): Promise<UserListDto> {
-    return Promise.resolve(undefined);
+  async updateUser(id: string, userDto: UserDto): Promise<User> {
+    const user = await this.userRepo.findOne(+id);
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    /* Updates user properties with values from userDto */
+    wrap(user).assign(userDto);
+
+    if (userDto.password) {
+      user.password = await bcrypt.hash(userDto.password, 10);
+    }
+
+    /*Save to DB*/
+    await this.userRepo.getEntityManager().flush();
+
+    return user;
   }
 }

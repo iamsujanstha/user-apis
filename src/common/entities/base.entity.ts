@@ -1,12 +1,15 @@
 import { PrimaryKey, Property } from '@mikro-orm/core';
+import { Exclude } from 'class-transformer';
 
 export class BaseEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property()
+  @Exclude()
+  @Property({ hidden: true })
   createdAt = new Date();
 
-  @Property({ onUpdate: () => new Date() })
+  @Exclude()
+  @Property({ onUpdate: () => new Date(), hidden: true })
   updatedAt = new Date();
 }

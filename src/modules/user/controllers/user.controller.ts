@@ -1,7 +1,16 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Param, Post, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Delete,
+  Put,
+  Body,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserListDto } from '../dto/userList.dto';
+import { UserDto } from '../dto/user.dto';
+import { User } from 'src/modules/user/entity/user.entity';
 
 @ApiTags('user')
 @Controller('user')
@@ -14,7 +23,7 @@ export class UserController {
     status: 200,
     description: 'The record has been successfully created.',
   })
-  public async getUserList(): Promise<UserListDto> {
+  public async getUserList(): Promise<User[]> {
     return this.userService.getUserList();
   }
 
@@ -24,7 +33,7 @@ export class UserController {
     status: 200,
     description: 'The record has been successfully created.',
   })
-  public async createUser(user: UserListDto): Promise<UserListDto> {
+  public async createUser(@Body() user: UserDto): Promise<User> {
     return this.userService.createUser(user);
   }
 
@@ -38,13 +47,16 @@ export class UserController {
     return this.userService.deleteUser(id);
   }
 
-  @Put()
+  @Put('/:id')
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully created.',
   })
-  public async updateUser(user: UserListDto): Promise<UserListDto> {
-    return this.userService.updateUser(user);
+  public async updateUser(
+    @Param('id') id: string,
+    @Body() user: UserDto,
+  ): Promise<User> {
+    return this.userService.updateUser(id, user);
   }
 }

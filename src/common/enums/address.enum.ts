@@ -1,4 +1,4 @@
 export enum addressType {
-  PRIMARY = 'PRIMARY',
-  SECONDARY = 'SECONDARY',
+  PERMANENT = 'PERMANENT',
+  TEMPORARY = 'TEMPORARY',
 }
