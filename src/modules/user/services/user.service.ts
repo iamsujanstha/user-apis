@@ -7,6 +7,7 @@ import { UserRepository } from 'src/modules/user/repo/user.repository';
 import { wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import * as bcrypt from 'bcrypt';
+import { Pagination } from 'src/shared/decorators/pagination.decorator';
 
 @Injectable()
 export class UserService implements IUserInterface {
@@ -36,8 +37,12 @@ export class UserService implements IUserInterface {
     }
   }
 
-  async getUserList(): Promise<User[]> {
-    return this.userRepo.findAll();
+  public async getUserList(
+    page: number,
+    limit: number,
+  ): Promise<{ data: User[]; total: number }> {
+    const offset = (page - 1) * limit;
+    return await this.userRepo.findAllUsers(limit, offset);
   }
 
   async updateUser(id: string, userDto: UserDto): Promise<User> {
