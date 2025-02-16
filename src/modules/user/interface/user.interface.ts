@@ -1,5 +1,5 @@
-import { User } from 'src/modules/user/entity/user.entity';
-import { UserDto } from '../dto/user.dto';
+import { UserDto } from '@module/user/dto/user.dto';
+import { User } from '@module/user/entity/user.entity';
 
 export interface IUserInterface {
   getUserList(

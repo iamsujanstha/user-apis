@@ -1,6 +1,6 @@
+import { BaseEntity } from '@common/entities/base.entity';
 import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { UserOfficeMapping } from 'src/modules/user/entity/user-office-mapping.entity';
+import { UserOfficeMapping } from '@module/user/entity/user-office-mapping.entity';
 
 @Entity({
   tableName: 'offices',

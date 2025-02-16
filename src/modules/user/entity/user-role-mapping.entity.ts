@@ -1,7 +1,7 @@
+import { PrimaryEntity } from '@common/entities/primary.entity';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
-import { User } from './user.entity';
-import { Role } from 'src/modules/role/entity/role.entity';
-import { PrimaryEntity } from 'src/common/entities/primary.entity';
+import { Role } from '@module/role/entity/role.entity';
+import { User } from '@module/user/entity/user.entity';
 
 @Entity({
   tableName: 'user_role_mappings',

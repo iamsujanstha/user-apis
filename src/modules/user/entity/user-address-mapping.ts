@@ -1,7 +1,7 @@
+import { PrimaryEntity } from '@common/entities/primary.entity';
 import { ManyToOne } from '@mikro-orm/core';
-import { User } from 'src/modules/user/entity/user.entity';
-import { Address } from 'src/modules/address/entity/address.entity';
-import { PrimaryEntity } from 'src/common/entities/primary.entity';
+import { Address } from '@module/address/entity/address.entity';
+import { User } from '@module/user/entity/user.entity';
 
 export class UserAddressMapping extends PrimaryEntity {
   @ManyToOne(() => User)

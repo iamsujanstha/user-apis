@@ -1,7 +1,7 @@
+import { BaseEntity } from '@common/entities/base.entity';
 import { Entity, EntityRepositoryType, Property } from '@mikro-orm/core';
+import { UserRepository } from '@module/user/repo/user.repository';
 import { Exclude } from 'class-transformer';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { UserRepository } from 'src/modules/user/repo/user.repository';
 
 @Entity({
   tableName: 'users',

@@ -1,7 +1,7 @@
+import { PrimaryEntity } from '@common/entities/primary.entity';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
-import { PrimaryEntity } from 'src/common/entities/primary.entity';
-import { Office } from 'src/modules/office/entity/office.entity';
-import { User } from 'src/modules/user/entity/user.entity';
+import { Office } from '@module/office/entity/office.entity';
+import { User } from '@module/user/entity/user.entity';
 
 @Entity({
   tableName: 'user_office_mappings',

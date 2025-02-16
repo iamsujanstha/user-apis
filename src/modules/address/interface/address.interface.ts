@@ -1,4 +1,4 @@
-import { CreateAddressDto } from '../dto/create-address.dto';
+import { CreateAddressDto } from '@module/address/dto/create-address.dto';
 
 export interface IAddressService {
   getAddress(): Promise<CreateAddressDto[]>;

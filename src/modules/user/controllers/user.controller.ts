@@ -9,9 +9,10 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
-import { UserService } from '../services/user.service';
-import { UserDto } from '../dto/user.dto';
-import { User } from 'src/modules/user/entity/user.entity';
+import { UserService } from '@module/user/services/user.service';
+import { User } from '@module/user/entity/user.entity';
+import { UserDto } from '@module/user/dto/user.dto';
+
 // import {
 //   Pagination,
 //   PaginationParams,

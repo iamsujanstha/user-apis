@@ -1,6 +1,6 @@
+import { BaseEntity } from '@common/entities/base.entity';
 import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { UserRoleMapping } from 'src/modules/user/entity/user-role-mapping.entity';
+import { UserRoleMapping } from '@module/user/entity/user-role-mapping.entity';
 
 @Entity({
   tableName: 'roles',

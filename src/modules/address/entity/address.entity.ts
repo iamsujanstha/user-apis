@@ -1,8 +1,8 @@
+import { BaseEntity } from '@common/entities/base.entity';
+import { addressType } from '@common/enums/address.enum';
 import { Entity, Enum, ManyToOne, Property } from '@mikro-orm/core';
-import { District } from '../../district/entity/district.entity';
-import { Province } from '../../province/entity/province.entity';
-import { addressType } from '../../../common/enums/address.enum';
-import { BaseEntity } from 'src/common/entities/base.entity';
+import { District } from '@module/district/entity/district.entity';
+import { Province } from '@module/province/entity/province.entity';
 
 @Entity({
   tableName: 'addresses',

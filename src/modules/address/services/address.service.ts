@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IAddressService } from '../interface/address.interface';
-import { CreateAddressDto } from '../dto/create-address.dto';
-import { AddressRepository } from 'src/modules/address/repo/address.repository';
 import { Injectable } from '@nestjs/common';
+import { AddressRepository } from '@module/address/repo/address.repository';
+import { IAddressService } from '@module/address/interface/address.interface';
+import { CreateAddressDto } from '@module/address/dto/create-address.dto';
 
 @Injectable()
 export class AddressService implements IAddressService {

@@ -7,7 +7,6 @@ import { UserRepository } from 'src/modules/user/repo/user.repository';
 import { wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import * as bcrypt from 'bcrypt';
-import { Pagination } from 'src/shared/decorators/pagination.decorator';
 
 @Injectable()
 export class UserService implements IUserInterface {
