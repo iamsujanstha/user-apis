@@ -13,11 +13,6 @@ import { UserService } from '@module/user/services/user.service';
 import { User } from '@module/user/entity/user.entity';
 import { UserDto } from '@module/user/dto/user.dto';
 
-// import {
-//   Pagination,
-//   PaginationParams,
-// } from 'src/shared/decorators/pagination.decorator';
-
 @ApiTags('user')
 @Controller('user')
 export class UserController {
@@ -33,9 +28,8 @@ export class UserController {
   @ApiQuery({ name: 'limit', required: false, example: 10 })
   public async getUserList(
     @Query('page') page: string = '1',
-    @Query('limit') limit: string = '10',
+    @Query('limit') limit: string = Number.MAX_SAFE_INTEGER.toString(),
   ): Promise<{ data: User[]; total: number }> {
-    console.log({ page, limit });
     const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
     const limitNumber = Math.min(Math.max(parseInt(limit, 10) || 10, 1), 100);
     return await this.userService.getUserList(pageNumber, limitNumber);
@@ -45,7 +39,7 @@ export class UserController {
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({
     status: 200,
-    description: 'The record has been successfully created.',
+    description: 'The user has been successfully created.',
   })
   public async createUser(@Body() user: UserDto): Promise<User> {
     return this.userService.createUser(user);

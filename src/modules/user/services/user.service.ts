@@ -31,9 +31,10 @@ export class UserService implements IUserInterface {
 
   async deleteUser(id: string): Promise<void> {
     const user = await this.userRepo.findOne(+id);
-    if (user) {
-      await this.userRepo.nativeDelete(+id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
+    await this.userRepo.nativeDelete(+id);
   }
 
   public async getUserList(

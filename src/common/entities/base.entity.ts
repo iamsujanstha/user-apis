@@ -6,10 +6,10 @@ export class BaseEntity {
   id!: number;
 
   @Exclude()
-  @Property({ hidden: true })
-  createdAt = new Date();
+  @Property({ defaultRaw: 'NOW()' }) // Ensures default in DB
+  createdAt!: Date;
 
   @Exclude()
-  @Property({ onUpdate: () => new Date(), hidden: true })
-  updatedAt = new Date();
+  @Property({ onUpdate: () => new Date(), defaultRaw: 'NOW()' }) // Ensures default in DB
+  updatedAt!: Date;
 }

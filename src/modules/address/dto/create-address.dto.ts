@@ -1,5 +1,5 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { addressType } from 'src/common/enums/address.enum';
+import { IsNotEmpty, IsString } from 'class-validator';
+// import { addressType } from 'src/common/enums/address.enum';
 
 export class CreateAddressDto {
   @IsNotEmpty()
@@ -15,7 +15,7 @@ export class CreateAddressDto {
   @IsNotEmpty()
   pinCode: string;
 
-  @IsNotEmpty()
-  @IsEnum(addressType)
-  type: addressType;
+  // @IsNotEmpty()
+  // @IsEnum(addressType)
+  // type: addressType;
 }

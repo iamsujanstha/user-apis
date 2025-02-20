@@ -1,6 +1,6 @@
 import { BaseEntity } from '@common/entities/base.entity';
-import { addressType } from '@common/enums/address.enum';
-import { Entity, Enum, ManyToOne, Property } from '@mikro-orm/core';
+// import { addressType } from '@common/enums/address.enum';
+import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import { District } from '@module/district/entity/district.entity';
 import { Province } from '@module/province/entity/province.entity';
 
@@ -24,6 +24,6 @@ export class Address extends BaseEntity {
   })
   province!: Province;
 
-  @Enum({ items: () => addressType })
-  type!: addressType;
+  // @Enum({ items: () => addressType })
+  // type!: addressType;
 }

@@ -1,7 +1,7 @@
+import { BaseEntity } from '@common/entities/base.entity';
 import { Entity, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/common/entities/base.entity';
 
-@Entity({ tableName: 'Province' })
+@Entity({ tableName: 'province' })
 export class Province extends BaseEntity {
   @Property()
   name!: string;

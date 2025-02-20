@@ -24,5 +24,9 @@ export class User extends BaseEntity {
   @Property({ fieldName: 'password', type: 'string' })
   password!: string;
 
+  @Exclude()
+  @Property({ nullable: true })
+  refreshToken?: string;
+
   [EntityRepositoryType]?: UserRepository;
 }

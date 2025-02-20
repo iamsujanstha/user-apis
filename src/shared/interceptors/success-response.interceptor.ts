@@ -28,6 +28,13 @@ export class SuccessResponseInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((response) => {
+        if (!response) {
+          return {
+            status: 'success',
+            message: `${resourceName} processed successfully`,
+            data: null,
+          };
+        }
         const { data, total } = response;
         const totalRecords = total || 0;
 

@@ -24,7 +24,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "mikro-orm": "NODE_OPTIONS='-r tsconfig-paths/register' mikro-orm"
+    "mikro-orm": "NODE_OPTIONS='-r tsconfig-paths/register' mikro-orm",
+    "migration:create": "mikro-orm migration:create",
+    "migration:up": "mikro-orm migration:up",
+    "migration:down": "mikro-orm migration:down",
+    "migration:generate": "mikro-orm migration:generate"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.4.5",
@@ -35,6 +39,7 @@
     "@nestjs/cache-manager": "^3.0.0",
     "@nestjs/common": "^11.0.8",
     "@nestjs/core": "^11.0.8",
+    "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^11.0.3",
     "bcrypt": "^5.1.1",
