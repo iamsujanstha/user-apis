@@ -7,6 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
+import * as cookie from 'cookie';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,17 +23,23 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest<Request>();
-    const accessToken = request.cookies?.accessToken; // Read token from cookies
+
+    const cookies = request.headers.cookie
+      ? cookie.parse(request.headers.cookie)
+      : {};
+    const accessToken = cookies['accessToken'];
 
     if (!accessToken) {
       throw new UnauthorizedException('Access denied. No token provided.');
     }
 
     try {
-      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET) as any;
-      // request.user = decoded; // Attach user data to the request
+      const decoded = jwt.verify(
+        accessToken,
+        process.env.JWT_SECRET || 'accessSecret',
+      ) as any;
+
       if (decoded) {
-        // request.user = decoded; // Attach user data to the request
         return true; // Grant access
       }
     } catch (error) {

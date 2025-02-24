@@ -11,6 +11,10 @@ import { SuccessResponseInterceptor } from 'src/shared/interceptors/success-resp
 import { SantizeResponseInterceptor } from 'src/shared/interceptors/sanitized-response.interceptor';
 import { AuthModule } from '@module/auth/auth.module';
 import { AuthGuard } from '@shared/guards/auth.guard';
+import { CacheModule } from '@nestjs/cache-manager';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import redisConfig from 'src/config/redis.config';
 
 @Module({
   imports: [
@@ -19,6 +23,22 @@ import { AuthGuard } from '@shared/guards/auth.guard';
     RoleModule,
     AuthModule,
     MikroOrmModule.forRoot(mikroOrmConfig),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env', // Ensures .env is loaded
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      isGlobal: true,
+      useFactory: redisConfig,
+      inject: [ConfigService],
+    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [
@@ -34,6 +54,10 @@ import { AuthGuard } from '@shared/guards/auth.guard';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
