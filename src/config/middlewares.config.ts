@@ -1,7 +1,8 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 // import { Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationExceptionFilter } from 'src/shared/filters/validation-exception.filter';
+import { HttpExceptionFilter } from '@shared/exception-filters/exception.filter';
+import { NextFunction, Request, Response } from 'express';
 // import cookieParser from 'cookie-parser';
 // import express from 'express';
 // import { RolesGuard } from '@shared/guards/roles.guard';
@@ -21,7 +22,15 @@ function enableCors(app: INestApplication) {
 }
 
 function setupGlobalPipes(app: INestApplication) {
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  const disableErrorMessages = process.env.NODE_ENV === 'production';
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      disableErrorMessages,
+    }),
+  );
 }
 
 // function setupGlobalGuards(app: INestApplication) {
@@ -29,7 +38,7 @@ function setupGlobalPipes(app: INestApplication) {
 // }
 
 // function setupMiddleware(app: INestApplication) {
-//   app.use(express.urlencoded({ extended: true }));
+//   app.use(express.urlencoded({ extended: true })); ---> app.use(middleware)
 //   app.use(cookieParser());
 // }
 
@@ -45,7 +54,7 @@ function setupSwagger(app: INestApplication) {
 }
 
 function setupFilters(app: INestApplication) {
-  app.useGlobalFilters(new ValidationExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 }
 
 export function setupMiddlewares(app: INestApplication) {

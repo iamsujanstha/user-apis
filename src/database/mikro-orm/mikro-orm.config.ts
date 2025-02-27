@@ -6,6 +6,7 @@ import { SeedManager } from '@mikro-orm/seeder';
 
 const mikroOrmConfig: Options<PostgreSqlDriver> = {
   dbName: postgresConfig.dbName,
+  allowGlobalContext: true,
   driver: PostgreSqlDriver,
   host: postgresConfig.host,
   port: postgresConfig.port,

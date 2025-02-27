@@ -104,6 +104,9 @@ export class AuthService implements AuthInterface {
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
-    return { data: 'Access token refreshed' };
+    res.send({
+      status: 'success',
+      message: 'Successfully get refresh token',
+    });
   }
 }

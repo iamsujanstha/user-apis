@@ -42,6 +42,7 @@ export class UserService implements IUserInterface {
     limit: number,
   ): Promise<{ data: User[]; total: number }> {
     const offset = (page - 1) * limit;
+
     return await this.userRepo.findAllUsers(limit, offset);
   }
 
