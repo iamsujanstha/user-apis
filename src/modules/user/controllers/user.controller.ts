@@ -11,18 +11,23 @@ import {
   UseInterceptors,
   UsePipes,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '@module/user/services/user.service';
 import { User } from '@module/user/entity/user.entity';
 import { UserDto } from '@module/user/dto/user.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { CustomPipe } from '../../../pipes/custom.pipe';
+import { CustomGuard } from '../../../guards/custom.guard';
+import { CustomInterceptor } from '../../../interceptors/custom.interceptor';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseInterceptors(CustomInterceptor)
+  @UseGuards(CustomGuard)
   @UsePipes(CustomPipe)
   @Get()
   @ApiOperation({ summary: 'Get paginated user list' })
